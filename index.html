@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.28.0",
+    "vite": "https://aistudiocdn.com/vite@^7.1.12",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.0",
+    "firebase/": "https://aistudiocdn.com/firebase@^12.5.0/"
+  }
+}
+</script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clothing Showroom Billing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            colors: {
+              cream: {
+                50: '#FDFDF5', // Very light, almost off-white cream
+                100: '#FCFAF3', // Main background cream
+              },
+              royal: {
+                50: '#ECF2FD', // Lightest royal for hover states
+                100: '#DDE6F9',
+                300: '#A4BFF1', // Focus ring
+                400: '#7E9EEB', // Dark mode text
+                500: '#5C7CDC', // Focus ring
+                600: '#4169E1', // Main royal blue
+                700: '#3254C2', // Darker royal for hover/active
+                800: '#25409E',
+                900: '#1A2E7A',
+              },
+            },
+          },
+        },
+      }
+    </script>
+    <style>
+      @page {
+        size: 3in auto; /* Set width to 3 inches, height grows with content */
+        margin: 0;
+      }
+      /* Apply theme-aware color scheme for browser UI like date pickers */
+      html {
+        color-scheme: light;
+      }
+      html.dark {
+        color-scheme: dark;
+      }
+      @media print {
+        body {
+          background-color: white !important;
+          -webkit-print-color-adjust: exact; /* Ensures backgrounds print in Chrome */
+          print-color-adjust: exact;
+        }
+        
+        /* Hide all non-essential UI elements. .print-hidden is on buttons, success messages, etc. */
+        header, .fixed.bottom-0, .print-hidden {
+          display: none !important;
+        }
+
+        /* Reset body and main containers to remove spacing and fit the page size */
+        body, main {
+          width: 3in !important;
+          max-width: 3in !important;
+          min-height: 0 !important;
+          height: auto !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          box-shadow: none !important;
+          border: none !important;
+        }
+        
+        /* The container for the bill should just be a simple wrapper */
+        #bill-to-print {
+           margin: 0 !important;
+           padding: 0 !important;
+           width: 100% !important;
+        }
+
+        /* Style the bill content for thermal printing */
+        .printable-area {
+          box-shadow: none !important;
+          border: none !important;
+          border-radius: 0 !important;
+          display: block !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          padding: 2mm !important;
+          margin: 0 !important;
+          font-family: 'Courier New', Courier, monospace !important;
+        }
+        
+        .printable-area * {
+          font-family: inherit !important;
+        }
+
+        /* Adjust font sizes for receipt readability */
+        .printable-area .text-lg { font-size: 14pt !important; }
+        .printable-area .text-xs { font-size: 9pt !important; }
+        .printable-area .text-\[10px\] { font-size: 8pt !important; }
+        .printable-area .text-sm { font-size: 10pt !important; }
+
+        /* Dark mode overrides for printing (ensure all text is black on a white background) */
+        .dark .printable-area, .dark table, .dark .dark\:bg-gray-800, .dark .dark\:bg-gray-700 {
+          background-color: white !important;
+        }
+        .dark .dark\:text-gray-200, .dark .dark\:text-gray-100, .dark .dark\:text-white, 
+        .dark .dark\:text-gray-800, .dark .dark\:text-gray-300, .dark .dark\:text-gray-400,
+        .dark .dark\:text-gray-500, .dark .dark\:text-gray-600, .dark .dark\:text-gray-700 {
+          color: black !important;
+        }
+        .dark .dark\:divide-gray-700 > :not([hidden]) ~ :not([hidden]) {
+          border-color: #ccc !important;
+        }
+        .dark .dark\:border-gray-700, .dark .dark\:border-gray-600 {
+          border-color: #ccc !important;
+        }
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(1rem); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes scaleIn {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+      }
+      .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+      .animate-fade-in-up { animation: fadeInUp 0.4s ease-out forwards; }
+      .animate-scale-in { animation: scaleIn 0.3s ease-out forwards; }
+    </style>
+  <link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-cream-100 dark:bg-gray-900 transition-colors duration-300">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+{
+  "name": "Copy of Clothing Showroom Billing",
+  "description": "A web application to manage billing for a clothing showroom. It allows users to create bills with customer details, item information, automatic discount calculation, and payment method selection.",
+  "requestFramePermissions": []
+}
